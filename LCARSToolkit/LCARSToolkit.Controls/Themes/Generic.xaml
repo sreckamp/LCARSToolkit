@@ -92,6 +92,9 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="right">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource Disabled}"/>
                                         </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="side">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource Disabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="content">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource DisabledText}"/>
                                         </ObjectAnimationUsingKeyFrames>
@@ -126,4 +129,201 @@
         </Setter>
     </Style>
 
+    <Style x:Key="LeftScrollViewer" TargetType="{x:Type ScrollViewer}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <ScrollContentPresenter Grid.Column="1"/>
+
+                        <ScrollBar Name="PART_VerticalScrollBar"
+                                   Value="{TemplateBinding VerticalOffset}"
+                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                        <ScrollBar Name="PART_HorizontalScrollBar"
+                                   Orientation="Horizontal"
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   Value="{TemplateBinding HorizontalOffset}"
+                                   Maximum="{TemplateBinding ScrollableWidth}"
+                                   ViewportSize="{TemplateBinding ViewportWidth}"
+                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ScrollBarBlockButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="OverridesDefaultStyle"
+                Value="true" />
+        <Setter Property="IsTabStop"
+                Value="false" />
+        <Setter Property="Focusable"
+                Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="{StaticResource Secondary}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ScrollBarBlockThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="{StaticResource Primary}" Margin="0,5" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ScrollBar" x:Key="LcarsVerticalScrollBar">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Track x:Name="PART_Track"
+                           IsDirectionReversed="true">
+                        <Track.DecreaseRepeatButton>
+                            <RepeatButton Style="{StaticResource ScrollBarBlockButton}"
+                                          Command="ScrollBar.PageUpCommand" />
+                        </Track.DecreaseRepeatButton>
+                        <Track.Thumb >
+                            <Thumb Style="{StaticResource ScrollBarBlockThumb}"/>
+                        </Track.Thumb>
+                        <Track.IncreaseRepeatButton>
+                            <RepeatButton Style="{StaticResource ScrollBarBlockButton}"
+                                          Command="ScrollBar.PageDownCommand" />
+                        </Track.IncreaseRepeatButton>
+                    </Track>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ScrollViewer}" x:Key="LcarsScrollViewer">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <lcars:Elbo Grid.Row="0" Grid.Column="0" Fill="{TemplateBinding Foreground}" Column="40" Bar="10" Corner="TopLeft" InnerArcRadius="30"/>
+                            <lcars:Rectangle Grid.Row="1" Grid.Column="0" Fill="{TemplateBinding Foreground}" Width="40" HorizontalAlignment="Left">
+                                <lcars:Rectangle.Style>
+                                    <Style TargetType="lcars:Rectangle">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Visibility, ElementName=PART_VerticalScrollBar}"
+                                                         Value="Visible">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </lcars:Rectangle.Style>
+                            </lcars:Rectangle>
+                            <ScrollBar Grid.Row="1" Name="PART_VerticalScrollBar"
+                                       HorizontalAlignment="Left"
+                                       Style="{StaticResource LcarsVerticalScrollBar}"
+                                       Value="{TemplateBinding VerticalOffset}"
+                                       Maximum="{TemplateBinding ScrollableHeight}"
+                                       ViewportSize="{TemplateBinding ViewportHeight}"
+                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                            <lcars:Elbo Grid.Row="2" Grid.Column="0" Fill="{TemplateBinding Foreground}" Column="40" Bar="10" Corner="BottomLeft" InnerArcRadius="30"/>
+                        </Grid>
+                        <Grid DockPanel.Dock="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <lcars:Rectangle Grid.Row="0" Grid.Column="0" Fill="{TemplateBinding Foreground}" Height="10" VerticalAlignment="Top"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{TemplateBinding lcars:Title.Text}" Visibility="{TemplateBinding lcars:Title.Visibility}" FontFamily="{StaticResource LCARS}" FontSize="30" Margin="10,0,0,0" Height="30" VerticalAlignment="Top" Foreground="White" LineStackingStrategy="BlockLineHeight" LineHeight="30"/>
+                        </Grid>
+                        <Grid DockPanel.Dock="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <lcars:Rectangle Grid.Column="0" Fill="{TemplateBinding Foreground}" Height="10"/>
+                            <lcars:Stump Grid.Column="1" Fill="{TemplateBinding Foreground}" Diameter="10"/>
+                        </Grid>
+                        <ScrollContentPresenter/>
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListBox" x:Key="Brackets">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <lcars:Elbo Grid.Row="0" Grid.Column="0" Fill="{TemplateBinding Foreground}" Column="10" Bar="40" Corner="TopLeft" InnerArcRadius="10"/>
+                        <lcars:Elbo Grid.Row="0" Grid.Column="2" Fill="{TemplateBinding Foreground}" Column="10" Bar="40" Corner="TopRight" InnerArcRadius="10"/>
+                        <lcars:Rectangle Grid.Row="1" Grid.Column="0" Fill="{TemplateBinding Foreground}" Width="10" HorizontalAlignment="Left"/>
+                        <lcars:Rectangle Grid.Row="1" Grid.Column="2" Fill="{TemplateBinding Foreground}" Width="10" HorizontalAlignment="Right"/>
+                        <lcars:Elbo Grid.Row="2" Grid.Column="0" Fill="{TemplateBinding Foreground}" Column="10" Bar="40" Corner="BottomLeft" InnerArcRadius="10"/>
+                        <lcars:Elbo Grid.Row="2" Grid.Column="2" Fill="{TemplateBinding Foreground}" Column="10" Bar="40" Corner="BottomRight" InnerArcRadius="10"/>
+                        <ScrollViewer Grid.Row="1" Grid.Column="1" Margin="0" Focusable="false">
+                            <StackPanel Margin="2"
+                                        IsItemsHost="True" />
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="ListBox" x:Key="CListBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <ScrollViewer x:Name="Values" Margin="0,0,0,10" Style="{StaticResource LcarsScrollViewer}"
+                                  lcars:Title.Text="{TemplateBinding lcars:Title.Text}" 
+                                  Focusable="false">
+                        <StackPanel Margin="2"
+                                    IsItemsHost="True" />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
