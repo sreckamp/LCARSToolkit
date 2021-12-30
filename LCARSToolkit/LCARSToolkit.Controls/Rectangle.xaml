@@ -16,7 +16,7 @@
                 <Rectangle Fill="#7F000000" Height="{TemplateBinding ActualHeight}" Visibility="{TemplateBinding MaskVisibility}"/>
                 <ContentPresenter Margin="5,0"
                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                  Content="{TemplateBinding Content}"
+                                  Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </Grid>
