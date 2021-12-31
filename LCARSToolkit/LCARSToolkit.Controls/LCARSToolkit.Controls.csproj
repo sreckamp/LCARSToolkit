@@ -6,19 +6,4 @@
         <AssemblyName>LCARSToolkit.Controls</AssemblyName>
         <RootNamespace>LCARSToolkit.Controls</RootNamespace>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Compile Remove="Properties\AssemblyInfo.cs" />
-      <Compile Remove="Button.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Page Remove="LabeledButton.xaml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Remove="LabeledButton.xaml.cs" />
-      <None Include="LabeledButton.xaml.cs" />
-    </ItemGroup>
-
 </Project>
