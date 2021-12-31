@@ -212,59 +212,83 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type ScrollViewer}" x:Key="LcarsScrollViewer">
+    <Style TargetType="{x:Type ScrollViewer}" x:Key="LcarsLeftScrollViewer">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                    <DockPanel>
-                        <Grid DockPanel.Dock="Left">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <lcars:Elbo Grid.Row="0" Grid.Column="0" Fill="{TemplateBinding Foreground}" Column="40" Bar="10" Corner="TopLeft" InnerArcRadius="30"/>
-                            <lcars:Rectangle Grid.Row="1" Grid.Column="0" Fill="{TemplateBinding Foreground}" Width="40" HorizontalAlignment="Left">
-                                <lcars:Rectangle.Style>
-                                    <Style TargetType="lcars:Rectangle">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Visibility, ElementName=PART_VerticalScrollBar}"
-                                                         Value="Visible">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </lcars:Rectangle.Style>
-                            </lcars:Rectangle>
-                            <ScrollBar Grid.Row="1" Name="PART_VerticalScrollBar"
-                                       HorizontalAlignment="Left"
-                                       Style="{StaticResource LcarsVerticalScrollBar}"
-                                       Value="{TemplateBinding VerticalOffset}"
-                                       Maximum="{TemplateBinding ScrollableHeight}"
-                                       ViewportSize="{TemplateBinding ViewportHeight}"
-                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
-                            <lcars:Elbo Grid.Row="2" Grid.Column="0" Fill="{TemplateBinding Foreground}" Column="40" Bar="10" Corner="BottomLeft" InnerArcRadius="30"/>
-                        </Grid>
-                        <Grid DockPanel.Dock="Top">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <lcars:Rectangle Grid.Row="0" Grid.Column="0" Fill="{TemplateBinding Foreground}" Height="10" VerticalAlignment="Top"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{TemplateBinding lcars:Title.Text, Converter={StaticResource ToUpperConverter}}" Visibility="{TemplateBinding lcars:Title.Visibility}" FontFamily="{StaticResource LCARS}" FontSize="30" Margin="10,0,0,0" Height="30" VerticalAlignment="Top" Foreground="{StaticResource LCARS_White}" LineStackingStrategy="BlockLineHeight" LineHeight="30"/>
-                        </Grid>
-                        <Grid DockPanel.Dock="Bottom">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <lcars:Rectangle Grid.Column="0" Fill="{TemplateBinding Foreground}" Height="10"/>
-                            <lcars:Stump Grid.Column="1" Fill="{TemplateBinding Foreground}" Diameter="10"/>
-                        </Grid>
-                        <ScrollContentPresenter Margin="0,10, 0, 0"/>
-                    </DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <lcars:Rectangle Grid.Column="0"
+                                         Fill="{TemplateBinding lcars:Lcars.Fill}"
+                                         Width="{TemplateBinding lcars:Lcars.Column}"
+                                         HorizontalAlignment="Right">
+                            <lcars:Rectangle.Style>
+                                <Style TargetType="lcars:Rectangle">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Visibility, ElementName=PART_VerticalScrollBar}"
+                                                     Value="Visible">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </lcars:Rectangle.Style>
+                        </lcars:Rectangle>
+                        <ScrollBar Grid.Column="0" Name="PART_VerticalScrollBar"
+                                   HorizontalAlignment="Left"
+                                   Style="{StaticResource LcarsVerticalScrollBar}"
+                                   Value="{TemplateBinding VerticalOffset}"
+                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                        <ScrollContentPresenter Grid.Column="1" Margin="20, 10, 0, 0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ScrollViewer}" x:Key="LcarsRightScrollViewer">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="{Binding Path=HorizontalScrollBarVisibility}"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ScrollContentPresenter Grid.Column="0" Margin="20, 10, 0, 0"/>
+                        <lcars:Rectangle Grid.Column="1"
+                                         Fill="{TemplateBinding lcars:Lcars.Fill}"
+                                         Width="{TemplateBinding lcars:Lcars.Column}"
+                                         HorizontalAlignment="Right">
+                            <lcars:Rectangle.Style>
+                                <Style TargetType="lcars:Rectangle">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Visibility, ElementName=PART_VerticalScrollBar}"
+                                                     Value="Visible">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </lcars:Rectangle.Style>
+                        </lcars:Rectangle>
+                        <ScrollBar Grid.Column="1" Name="PART_VerticalScrollBar"
+                                   HorizontalAlignment="Left"
+                                   Style="{StaticResource LcarsVerticalScrollBar}"
+                                   Value="{TemplateBinding VerticalOffset}"
+                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -304,12 +328,63 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
-                    <ScrollViewer x:Name="Values" Margin="0,0,0,0" Style="{StaticResource LcarsScrollViewer}"
-                                  lcars:Title.Text="{TemplateBinding lcars:Title.Text}" 
-                                  Focusable="false">
-                        <StackPanel Margin="2"
-                                    IsItemsHost="True" />
-                    </ScrollViewer>
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <lcars:Elbo Grid.Column="0"
+                                        Fill="{TemplateBinding lcars:Lcars.Fill}"
+                                        Column="{TemplateBinding lcars:Lcars.Column}"
+                                        Bar="{TemplateBinding lcars:Lcars.Bar}"
+                                        InnerArcRadius="{TemplateBinding lcars:Lcars.InnerArcRadius}"
+                                        Corner="TopLeft"/>
+                            <lcars:Rectangle Grid.Column="1"
+                                             Fill="{TemplateBinding lcars:Lcars.Fill}"
+                                             Height="{TemplateBinding lcars:Lcars.Bar}"
+                                             VerticalAlignment="Top"/>
+                            <TextBlock Grid.Column="2" Text="{TemplateBinding lcars:Lcars.Text, Converter={StaticResource ToUpperConverter}}"
+                                       Visibility="{TemplateBinding lcars:Lcars.Visibility}"
+                                       FontFamily="{StaticResource LCARS}"
+                                       FontSize="30" Height="30" LineHeight="30"
+                                       Margin="10,0,0,0"
+                                       VerticalAlignment="Top"
+                                       Foreground="{StaticResource LCARS_White}"
+                                       LineStackingStrategy="BlockLineHeight"/>
+                        </Grid>
+                        <Grid DockPanel.Dock="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <lcars:Elbo Grid.Column="0"
+                                        Fill="{TemplateBinding lcars:Lcars.Fill}"
+                                        Column="{TemplateBinding lcars:Lcars.Column}"
+                                        Bar="{TemplateBinding lcars:Lcars.Bar}"
+                                        InnerArcRadius="{TemplateBinding lcars:Lcars.InnerArcRadius}"
+                                        Corner="BottomLeft"/>
+                            <lcars:Rectangle Grid.Column="1"
+                                             Fill="{TemplateBinding lcars:Lcars.Fill}"
+                                             Height="{TemplateBinding lcars:Lcars.Bar}"
+                                             VerticalAlignment="Bottom"/>
+                            <lcars:Stump Grid.Column="2"
+                                         Fill="{TemplateBinding lcars:Lcars.Fill}"
+                                         Height="{TemplateBinding lcars:Lcars.Bar}"
+                                         Diameter="{TemplateBinding lcars:Lcars.Bar}"
+                                         VerticalAlignment="Bottom"/>
+                        </Grid>
+
+                        <ScrollViewer x:Name="Values" Margin="0,0,0,0"
+                                      Style="{StaticResource LcarsLeftScrollViewer}"
+                                      lcars:Lcars.Fill="{TemplateBinding lcars:Lcars.Fill}"
+                                      lcars:Lcars.Column="{TemplateBinding lcars:Lcars.Column}"
+                                      Focusable="false">
+                            <StackPanel Margin="2" IsItemsHost="True" />
+                        </ScrollViewer>
+                    </DockPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

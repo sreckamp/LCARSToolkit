@@ -6,8 +6,6 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="400"
-             VerticalAlignment="Top"
-             HorizontalAlignment="Left"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
 

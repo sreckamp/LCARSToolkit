@@ -26,7 +26,6 @@ namespace LCARSToolkit.Controls
             this.Click += (s, e) =>
             {
                 if( s is not LabeledButton button) return;
-                Debug.WriteLine($"{button.Content}[{button.Label}] Pressed");
             };
             // this.Click += (s,e) => SoundElement?.Play();
             // subscribe to the single, global FlashTimer such that everything flashes synchronously
@@ -65,7 +64,6 @@ namespace LCARSToolkit.Controls
         {
             if(d is not LabeledButton button) return;
 
-            Debug.WriteLine($"UpdateLabel {e.OldValue} => {button.Label}");
             button.LabelVisibility = string.IsNullOrEmpty(button.Label) ? Visibility.Collapsed : Visibility.Visible;
         }
 
@@ -115,7 +113,6 @@ namespace LCARSToolkit.Controls
                 DockPanel.SetDock(side, Dock.Right);
                 if (caller.GetTemplateChild("right") is Stump stump)
                 {
-                    Debug.WriteLine("Right to Right");
                     DockPanel.SetDock(stump, Dock.Right);
                 }
                 DockPanel.SetDock(label, Dock.Right);
@@ -200,7 +197,6 @@ namespace LCARSToolkit.Controls
         {
             if(d is not LabeledButton button) return;
 
-            Debug.WriteLine($"UpdateStumps {e.OldValue} => {button.Stumps}");
             button.LeftVisibility =
                 button.Stumps is Stumps.Both or Stumps.Left ? Visibility.Visible : Visibility.Collapsed;
             button.RightVisibility =
